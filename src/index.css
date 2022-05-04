@@ -1,13 +1,233 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primaryColor: #f15025;
+  --mainWhite: #fff;
+  --mainBlack: #222;
+  --mainGrey: #9e9e9e;
+  --mainRed: #d50000;
+  --mainGreen: #4caf50;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+* {
+  padding: 0px;
+  margin: 0px;
+  color:white;
+  box-sizing: border-box;
+  font-family: 'Kalam', cursive;
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Readex Pro', sans-serif;
 }
+
+
+
+html {
+  background: url('./cardsImages/casino-bckg.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+}
+
+
+.App {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+
+}
+
+.tabla-joc {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 200px;
+  width: 70%;
+  border: rgb(27, 27, 27) 10px solid;
+  margin:0 auto;
+  height: 80vh;
+  background-image: url('./cardsImages/tabla-joc.jpg');
+}
+
+.btn {
+  text-decoration: none;
+  color: var(--mainWhite);
+  background-color: var(--mainGreen);
+  text-align: center;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+  display: block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  text-transform: uppercase;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+.btn:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.btn:active {
+  transform: translateY(4px);
+}
+
+.btn-disabled {
+  text-decoration: none;
+  color: var(--mainWhite);
+  background-color: var(--mainGrey);
+  text-align: center;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+  display: block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  text-transform: uppercase;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.app-header {
+  margin-top: 15px;
+  width: 100%;
+  padding-left:5vw;
+  text-align: center;
+  display: flex;
+
+}
+
+.title {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.contoare-pariuJeton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5%;
+  font-size: 2rem;
+
+}
+
+.urmatorul-pariu, .jetoaneLabel
+{
+  background-color: rgba(255, 255, 255, 0.205);
+  padding:5px;
+}
+
+
+.carti-dealer {
+  display: flex;
+  justify-content: center;
+}
+
+.jeton-empty {
+  display: flex;
+
+}
+
+.jeton-empty img {
+  width: 130px;
+  margin: 15px 0;
+}
+
+.jeton-empty p {
+  margin-top: 20px;
+}
+
+.blockedSum {
+  position: relative;
+  right: 90px;
+  top: 70px;
+  color: blueviolet;
+  font-weight: 600;
+  font-size:20px;
+}
+
+
+.scor-dealer {
+  text-align: center;
+  font-weight: 500;
+  font-size:30px;
+  margin-bottom: 15px;
+}
+
+.contoare-pariuJeton {
+  margin-top: -37px;
+}
+
+span {
+  font-weight: 500;
+}
+
+span.urmatorul-pariu {
+  margin-right: 30px;
+}
+
+img {
+  width: 130px;
+  cursor: pointer;
+}
+
+.jetoane-butoane-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.jetoane img {
+  width: 80px;
+  height: 80px;
+  margin:15px;
+}
+
+.jetoane img:active {
+  transform: translateY(4px);
+}
+
+.btn-beforePlay {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.btn-play {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.info-win {
+  font-size: 20px;
+}
+
+
+/* footer {
+  display:flex;
+  justify-content: center;
+  margin:15px;
+} */
+
+/* .butoane-bottom {
+  display:flex;
+} */

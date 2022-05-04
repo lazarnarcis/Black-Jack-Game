@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+termenii de baza
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+- Înainte de a deprinde diferitele strategii ale jocului, e bine să cunoști termenii de bază din Blackjack.
 
-In the project directory, you can run:
+- Asigurare (Insurance) - Un pariu suplimentar pus de jucător, cu valoare 50% din pariul inițial, Această opțiune e disponibilă doar când dealerul arată un as. Dacă plătești asigurarea și dealerul realizează un Blackjack, primești înapoi banii mizați (Asigurare + pariul inițial)
 
-### `npm start`
+- Blackjack - o mână cu totalul 21 din primele două cărți, deci formată dintr-un A și o carte cu valoare 10 (10,J,Q,K) (A poate avea valoarea 1 sau 11)
+- Bust - o mână cu total mai mare de 21, automat pierzătoare
+- Dublare (Double Down) - opțiune prin care jucătorul dublează pariul și pe care o poate folosi o singură dată într-o mână. După dublare, jucătorul mai primește o singură carte și e obligat să se oprească indiferent de totalul obținut
+- Hard hand (Mână hard) - mână care nu conține un as (A)
+- Hit (Cere o carte) - jucătorul mai cere o carte;
+- Push (Egalitate) -  când jucătorul și dealerul sunt la egalitate și banii mizați sunt returnați;
+- Soft hand (Mână soft) - mână care conține un as (A), carte ce poate valora fie 11, fie 1
+- Split - când jucătorul are în mână o pereche și poate împărți cele două cărți, repetând miza. În această situaţie, se joacă două mâini simultan, iar dealerul împarte cărți pentru amândouă
+- Surrender - opțiune disponibilă doar în unele variante ale jocului, când ai posibilitatea să te "predai" și să salvezi astfel 50% din miză
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+logica implementare ----
+- creare matrice de obiecte cu fiecare carte care contine numele cartii si imaginea aferenta stocate intr-o constanta
+- functie pentru amestecat cartile de joc
+- componentele React necesare(Joc,carte,player,Jeton,Pariu,Buton)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+//  const containsAce = asCard.filter((card)=> card.name.startsWith("A"))
+//  .map(card => {
+//   let temp = Object.assign({}, card)
+//   if(temp.cardValue === 1)
+//   	temp.cardValue = 11;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+//   return temp
+//   }
+//  )
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// console.log(containsAce)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ //functia pentru a schimba cartea curenta cu una aleatoare
+  // const schimbaCartea = () => {
+  //   let randomIndex = Math.floor(Math.random() * carti.length);
+  //   setCard({
+  //     name: carti[randomIndex].name,
+  //     img: carti[randomIndex].img,
+  //     cardValue: carti[randomIndex].cardValue
+  //   });
+  // };
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    // const [card, setCard] = useState({
+  //   name: "2T",
+  //   img: doi_trefla,
+  //   cardValue: 2
+  // });
