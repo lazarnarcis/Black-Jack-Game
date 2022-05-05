@@ -38,11 +38,17 @@ const TablaJoc = (
       { esteJetonBlocat && <p className="jeton-empty">
         <img src={jetonValoare_empty} alt="jeton_gol" />
         <span className="blockedSum">{blocheazaSumaMiza === 0 ? mizaAnterioara : blocheazaSumaMiza}</span>
-        </p>}
+      {castigatorul && <span className="info-win">
+        {castigatorul} este castigator
+        </span>}
+        </p> }
 
-        <p className="info-win">
-            Anunt Castigator / pierzator
-        </p>
+
+
+
+
+
+
 
       <div className="scor-dealer">Carti Jucator - {sumaCartiJucator}</div>
           <div className="carti-dealer">

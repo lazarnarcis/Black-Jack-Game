@@ -28,7 +28,8 @@ const Butons = ({
   esteBlackJack,
   castigatorul,
   cartiJucator,
-  esteDealerulPrins
+  esteDealerulPrins,
+  seteazaInceputJoc
 }) => {
 
   const startMana = () => {
@@ -37,6 +38,7 @@ const Butons = ({
       seteazaTuraDealerului(false); // setam tura dealerului in false
       seteazaMizaAnterioara(blocheazaSumaMiza);
       seteazaEsteBlackJack(false);
+      seteazaInceputJoc(true);
       seteazaManaCompleta(false); //mana completa devine false in momentul in care jocul incepe
       seteazaNumarJetoane(numarJetoane - blocheazaSumaMiza); //numarul de jetoane este dedus din Miza
       seteazaCastigatorul(""); //initializare castigator cu string gol

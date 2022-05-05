@@ -133,7 +133,7 @@ const App = () => {
   const [esteBlackJack, seteazaEsteBlackJack] = useState(false);
   const [esteDublaj, seteazaEsteDublaj] = useState(false);
   const [esteTuraJucatorului, seteazaTuraJucatorului] = useState(true);
-
+  const [inceputJoc, seteazaInceputJoc] = useState(false);
 
 
   const amestecaCartile = (carti) => {
@@ -206,13 +206,48 @@ const App = () => {
 
   const cartiJ = scorMana(cartiJucator);
   const cartiD = scorMana(cartiDealer);
-
+//use effectul initial va executa functia imparteCartile() in pasul initial
   useEffect(() => {
     imparteCartile();
   }, []);
+
+//use efect pentru a verifica daca exista blakJack in startul Jocului
+useEffect(() => {
+  if(inceputJoc){
+  //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
+  if(cartiJucator.length === 2
+    && sumaCartiJucator > 10
+    && sumaCartiDealer !== 21){
+      seteazaEsteBlackJack(true);
+      seteazaCastigatorul("Jucatorul 1");
+      seteazaManaCompleta(true);
+      seteazaTuraDealerului(true);
+    }
+  //verificam daca Dealerul a castigat
+  if(cartiDealer.length === 2
+    && sumaCartiDealer === 21
+    && sumaCartiJucator !== 21) {
+      seteazaEsteBlackJack(true);
+      seteazaCastigatorul("Dealer");
+      seteazaManaCompleta(true);
+      seteazaTuraDealerului(true);
+    }
+  //verificam daca e scor egal
+  if(cartiDealer.length === 2
+    && cartiJucator === 2
+    && sumaCartiJucator === 21
+    && sumaCartiDealer === 21){
+     seteazaCastigatorul("meci egal");
+     seteazaManaCompleta(true);
+     seteazaTuraDealerului(true);
+    }
+}
+}, [inceputJoc])
+
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
   useEffect(() => {
     seteazaSumaCartiJucator(cartiJ);
+    console.log("Castigatorul este: ", castigatorul);
   }, [cartiJ]);
 
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt dealer
@@ -281,6 +316,7 @@ const App = () => {
               castigatorul={castigatorul}
               cartiJucator={cartiJucator}
               esteDealerulPrins={esteDealerulPrins}
+              seteazaInceputJoc={seteazaInceputJoc}
             />
         </div>
       </div>
