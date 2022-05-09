@@ -29,7 +29,8 @@ const Butons = ({
   castigatorul,
   cartiJucator,
   esteDealerulPrins,
-  seteazaInceputJoc
+  seteazaInceputJoc,
+  extrageCarte
 }) => {
 
   const startMana = () => {
@@ -69,10 +70,7 @@ const Butons = ({
       && castigatorul !== 'dealer'
       && !esteBlackJack) {
       setTimeout(() => {
-        const pachetRandomCarti = generarePachetRandomCarti();
-        let pachetcartiCurent = [...pachetRandomCarti]
-        let urmatoareaCarte = pachetcartiCurent.slice(0,1)[0];
-        seteazaCartiJucator([...cartiJucator, urmatoareaCarte]);
+        extrageCarte();
       },300);
     }
   }

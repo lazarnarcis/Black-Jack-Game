@@ -138,7 +138,7 @@ const App = () => {
 
   const amestecaCartile = (carti) => {
     //se parcurg cartile de joc de la ultima carte pana la prima
-    for (let i = carti.length - 1; i > 0; i--) {
+    for (let i = carti.length - 1; i >= 0; i--) {
       //se creaza un index j care va stoca un nr intreg intre 0 si 51
       let j = Math.floor(Math.random() * i); // pp = 2
       let temp = carti[i]; //temp=51
@@ -159,17 +159,16 @@ const App = () => {
     let suma = carti.reduce((prevCard, currentCard) => {
       return (prevCard += currentCard.cardValue);
     }, 0);
-    //daca exista un ACE cu valoarea 1 si suma cartilor este < 11 adauga 10
-    if (verificaAS() && suma < 11) {
-      return (suma += 10);
-    } else if (verificaAS() && suma > 21) {
-      //daca exista un ACE cu valoarea 1 si suma cartilor este > 21 scade 10 -> (ex pt 3 carti cu suma 27 + un as cu val 1-> total 28 se scade 10)
-      return (suma -= 10);
-    } else {
-      //daca nu exista AS in carti returneaza doar suma
-      return suma;
-    }
-  };
+//daca exista un ACE cu valoarea 1 si suma cartilor este < 11 adauga 10
+    return verificaAS() && suma < 11 ? (suma += 10) : suma;
+    // if (verificaAS() && suma < 11) {
+    //   return (suma += 10);
+    // } else {
+    //   //daca exista un ACE cu valoarea 1 si suma cartilor este > 21 scade 10 -> (ex pt 3 carti cu suma 27 + un as cu val 1-> total 28 se scade 10)
+    //   return suma;
+    // }
+  }
+
 
   const generarePachetRandomCarti = () => {
     return amestecaCartile(carti);
@@ -204,9 +203,28 @@ const App = () => {
     ]);
   };
 
+  const extrageCarte = () => {
+      const pachetRandomCarti = generarePachetRandomCarti();
+      let pachetCartiCurent = [...pachetRandomCarti];
+      console.log(`PachetCarti:${JSON.stringify(pachetCartiCurent)}`);
+      let urmatoareaCarte = pachetCartiCurent.slice(0,1)[0];
+      console.log(`urmtoareaCarte:${JSON.stringify(urmatoareaCarte)}`);
+      if(esteTuraDealerului){
+        seteazaCartiDealer([...cartiDealer, urmatoareaCarte]);
+        scorMana(cartiDealer);
+      }else{
+        seteazaCartiJucator([...cartiJucator, urmatoareaCarte]);
+        scorMana(cartiJucator);
+      }
+  }
+
   const cartiJ = scorMana(cartiJucator);
   const cartiD = scorMana(cartiDealer);
+
+  console.log("sumaCartiJucator", cartiJ);
+ // console.log("sumaCartiDealer", cartiD);
 //use effectul initial va executa functia imparteCartile() in pasul initial
+
   useEffect(() => {
     imparteCartile();
   }, []);
@@ -214,9 +232,10 @@ const App = () => {
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
   if(inceputJoc){
+  console.log("UseEffect inceput joc");
   //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
   if(cartiJucator.length === 2
-    && sumaCartiJucator > 10
+    && sumaCartiJucator === 21
     && sumaCartiDealer !== 21){
       seteazaEsteBlackJack(true);
       seteazaCastigatorul("Jucatorul 1");
@@ -228,7 +247,7 @@ useEffect(() => {
     && sumaCartiDealer === 21
     && sumaCartiJucator !== 21) {
       seteazaEsteBlackJack(true);
-      seteazaCastigatorul("Dealer");
+      seteazaCastigatorul("Dealerul");
       seteazaManaCompleta(true);
       seteazaTuraDealerului(true);
     }
@@ -243,11 +262,85 @@ useEffect(() => {
     }
 }
 }, [inceputJoc])
+//useEffect pentru randul jucatorului
+useEffect(() => {
+  //daca suma cartilor jucatorului este > 21 acesta a pierdut. Functia useEffect se apeleaza de fiecare data cand variabila sumaCartiJucator este actualizata
+ if(sumaCartiJucator > 21) {
+    seteazaCastigatorul("Dealerul");
+    seteazaEstePlayerulPrins(true);
+    seteazaManaCompleta(true);
+    seteazaTuraDealerului(true);
+    scorMana(cartiJucator)
+ }
+},[sumaCartiJucator]);
+
+useEffect(() => {
+  console.log("Use effect esteTuraDealerului");
+  if(inceputJoc){
+  if(esteTuraDealerului
+    && sumaCartiDealer < 17
+    && !estePlayerulPrins
+    && castigatorul !== 'Jucatorul 1'){
+      setTimeout(() => {
+        extrageCarte();
+      },700);
+    }
+    if(esteTuraDealerului
+      && sumaCartiDealer >= 17
+      && sumaCartiDealer <= 21
+      && sumaCartiJucator < 22){
+
+        if(sumaCartiDealer > sumaCartiJucator){
+          console.log(`1ifsumaDealer:${sumaCartiDealer}`)
+          console.log(`1ifsumaJucator:${sumaCartiJucator}`)
+          seteazaCastigatorul("Dealerul");
+          seteazaManaCompleta(true);
+        }
+        if(sumaCartiDealer < sumaCartiJucator){
+          console.log(`2ifsumaDealer:${sumaCartiDealer}`)
+          console.log(`2ifsumaJucator:${sumaCartiJucator}`)
+          seteazaCastigatorul("Jucatorul 1");
+          seteazaManaCompleta(true);
+        }
+        if(sumaCartiDealer === sumaCartiJucator){
+          console.log(`3ifsumaDealer:${sumaCartiDealer}`)
+          console.log(`3ifsumaJucator:${sumaCartiJucator}`)
+          seteazaCastigatorul("egalitate");
+          seteazaManaCompleta(true)
+        }
+
+      }
+  }
+},[esteTuraDealerului])
+
+useEffect(() => {
+  if(inceputJoc){
+    if(sumaCartiDealer > 21){
+      seteazaEsteDealerulPrins(true);
+      seteazaCastigatorul("Playerul 1");
+      seteazaManaCompleta(true);
+    }
+    if(sumaCartiDealer >= 17 && sumaCartiDealer < 22 && esteTuraDealerului){
+      if(sumaCartiDealer > sumaCartiJucator){
+        seteazaCastigatorul("Dealerul");
+        seteazaManaCompleta(true);
+      }
+      if(sumaCartiDealer < sumaCartiJucator && !estePlayerulPrins){
+        seteazaCastigatorul("Jucatorul 1");
+        seteazaManaCompleta(true);
+      }
+      if(sumaCartiDealer === sumaCartiJucator && !estePlayerulPrins){
+        setTimeout(() => {
+          extrageCarte();
+        },700)
+      }
+    }
+  }
+},[sumaCartiDealer])
 
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
   useEffect(() => {
     seteazaSumaCartiJucator(cartiJ);
-    console.log("Castigatorul este: ", castigatorul);
   }, [cartiJ]);
 
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt dealer
@@ -256,8 +349,7 @@ useEffect(() => {
   }, [cartiD]);
 
   useEffect(() => {
-    console.log(`este tura dealerului:${esteTuraDealerului}`)
-  },[esteTuraDealerului])
+  },[])
 
 
   return (
@@ -317,6 +409,7 @@ useEffect(() => {
               cartiJucator={cartiJucator}
               esteDealerulPrins={esteDealerulPrins}
               seteazaInceputJoc={seteazaInceputJoc}
+              extrageCarte={extrageCarte}
             />
         </div>
       </div>

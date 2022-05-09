@@ -19,11 +19,11 @@ const TablaJoc = (
 
     return (
         <div className="tabla-joc">
-       { (esteManaCompleta || esteTuraDealerului) && <div className="scor-dealer">Carti Dealer - {sumaCartiDealer}</div>}
+       { (esteManaCompleta || esteTuraDealerului)  && <div className="scor-dealer">Carti Dealer - {sumaCartiDealer}</div>}
           <div className="carti-dealer">
 
-            { esteTuraDealerului ? (cartiDealer?.map(carte =>
-            <div key={carte.name} className="card">
+            { esteTuraDealerului ? (cartiDealer?.map((carte,index) =>
+            <div key={index} className="card">
             <img src={carte.img} alt="noPic" />
             </div>))
             :
@@ -53,8 +53,8 @@ const TablaJoc = (
       <div className="scor-dealer">Carti Jucator - {sumaCartiJucator}</div>
           <div className="carti-dealer">
 
-            {cartiJucator?.map(carte =>
-            <div key={carte.name} className="card">
+            {cartiJucator?.map((carte,index) =>
+            <div key={index} className="card">
             <img src={carte.img} alt="noPic"/>
             </div>)}
 
