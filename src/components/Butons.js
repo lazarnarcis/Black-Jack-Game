@@ -30,7 +30,8 @@ const Butons = ({
   cartiJucator,
   esteDealerulPrins,
   seteazaInceputJoc,
-  extrageCarte
+  extrageCarte,
+  mizaAnterioara
 }) => {
 
   const startMana = () => {
@@ -85,6 +86,23 @@ const Butons = ({
     console.log("Dublaj button hit!");
   }
 
+ const gestioneazaAcceasiMiza = () => {
+    if((esteManaCompleta)
+    && (numarJetoane >= mizaAnterioara)
+    && (mizaAnterioara > 0)) {
+      imparteCartile();
+      seteazaManaCompleta(false);
+      seteazaCastigatorul("");
+      seteazaEsteDealerulPrins(false);
+      seteazaEstePlayerulPrins(false);
+      seteazaTuraDealerului(false);
+      seteazaBlocheazaMiza(0);
+      seteazaEsteBlackJack(false);
+      seteazaNumarJetoane(numarJetoane - mizaAnterioara);
+      seteazaEsteDublaj(false);
+    }
+ }
+
 
     return (
       <>
@@ -96,14 +114,17 @@ const Butons = ({
         <button className={blocheazaSumaMiza > 0 ? 'btn' : 'btn-disabled'}
         onClick={startMana}
         >Start mana</button>
-        <button className="btn">Acceasi miza</button>
+        <button className="btn" onClick={gestioneazaAcceasiMiza}>Acceasi miza</button>
         <button className={sumaMiza > 0 ? 'btn': 'btn-disabled'} onClick={() => seteazaSumaMiza(0)}>Resetare Miza</button>
         </div>
         :
         <div className="btn-play">
         <button  className='btn' onClick={gestioneazaHit}>hit</button>
         <button  className='btn' onClick={gestioneazaStay}>stay</button>
-        <button  className='btn' onClick={gestioneazaDublaj}>double</button>
+        <button
+        className={(cartiJucator.length === 2 && numarJetoane >= mizaAnterioara) ? 'btn' : 'btn-disabled'}
+        onClick={cartiJucator.length !== 2 ? () => {return 0} : gestioneazaDublaj}
+        >double</button>
       </div>
         }
 

@@ -44,12 +44,7 @@ const TablaJoc = (
         </p> }
 
 
-
-
-
-
-
-
+{/* carti jucator */}
       <div className="scor-dealer">Carti Jucator - {sumaCartiJucator}</div>
           <div className="carti-dealer">
 

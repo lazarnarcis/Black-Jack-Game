@@ -224,6 +224,12 @@ img {
   justify-content: center;
 }
 
+.carte-dublaj {
+  max-height: 20vh;
+  width: auto;
+  transform: rotate(90deg);
+}
+
 
 /* footer {
   display:flex;

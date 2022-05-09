@@ -281,6 +281,7 @@ useEffect(() => {
     && sumaCartiDealer < 17
     && !estePlayerulPrins
     && castigatorul !== 'Jucatorul 1'){
+      console.log("sumaCartiDealer < 17");
       setTimeout(() => {
         extrageCarte();
       },700);
@@ -311,7 +312,7 @@ useEffect(() => {
 
       }
   }
-},[esteTuraDealerului])
+},[esteTuraDealerului,sumaCartiDealer])
 
 useEffect(() => {
   if(inceputJoc){
@@ -410,6 +411,7 @@ useEffect(() => {
               esteDealerulPrins={esteDealerulPrins}
               seteazaInceputJoc={seteazaInceputJoc}
               extrageCarte={extrageCarte}
+              mizaAnterioara={mizaAnterioara}
             />
         </div>
       </div>
