@@ -206,9 +206,9 @@ const App = () => {
   const extrageCarte = () => {
       const pachetRandomCarti = generarePachetRandomCarti();
       let pachetCartiCurent = [...pachetRandomCarti];
-      console.log(`PachetCarti:${JSON.stringify(pachetCartiCurent)}`);
+    //  console.log(`PachetCarti:${JSON.stringify(pachetCartiCurent)}`);
       let urmatoareaCarte = pachetCartiCurent.slice(0,1)[0];
-      console.log(`urmtoareaCarte:${JSON.stringify(urmatoareaCarte)}`);
+     // console.log(`urmtoareaCarte:${JSON.stringify(urmatoareaCarte)}`);
       if(esteTuraDealerului){
         seteazaCartiDealer([...cartiDealer, urmatoareaCarte]);
         scorMana(cartiDealer);
@@ -231,7 +231,6 @@ const App = () => {
 
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
-  if(inceputJoc){
   console.log("UseEffect inceput joc");
   //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
   if(cartiJucator.length === 2
@@ -256,15 +255,15 @@ useEffect(() => {
     && cartiJucator === 2
     && sumaCartiJucator === 21
     && sumaCartiDealer === 21){
-     seteazaCastigatorul("meci egal");
+     seteazaCastigatorul("egalitate");
      seteazaManaCompleta(true);
      seteazaTuraDealerului(true);
     }
-}
-}, [inceputJoc])
+})
 //useEffect pentru randul jucatorului
 useEffect(() => {
   //daca suma cartilor jucatorului este > 21 acesta a pierdut. Functia useEffect se apeleaza de fiecare data cand variabila sumaCartiJucator este actualizata
+
  if(sumaCartiJucator > 21) {
     seteazaCastigatorul("Dealerul");
     seteazaEstePlayerulPrins(true);
@@ -284,13 +283,9 @@ useEffect(() => {
       console.log("sumaCartiDealer < 17");
       setTimeout(() => {
         extrageCarte();
-      },700);
+      },500);
     }
-    if(esteTuraDealerului
-      && sumaCartiDealer >= 17
-      && sumaCartiDealer <= 21
-      && sumaCartiJucator < 22){
-
+    if(esteTuraDealerului && sumaCartiDealer >= 17 && sumaCartiDealer <= 21 && !estePlayerulPrins){
         if(sumaCartiDealer > sumaCartiJucator){
           console.log(`1ifsumaDealer:${sumaCartiDealer}`)
           console.log(`1ifsumaJucator:${sumaCartiJucator}`)
@@ -309,18 +304,21 @@ useEffect(() => {
           seteazaCastigatorul("egalitate");
           seteazaManaCompleta(true)
         }
-
       }
   }
-},[esteTuraDealerului,sumaCartiDealer])
+},[esteTuraDealerului])
 
 useEffect(() => {
   if(inceputJoc){
+    console.log(`Suma carti dealer ${sumaCartiDealer}`);
     if(sumaCartiDealer > 21){
+      console.log("Suma carti dealer > 21");
       seteazaEsteDealerulPrins(true);
       seteazaCastigatorul("Playerul 1");
       seteazaManaCompleta(true);
+      console.log(`${esteDealerulPrins}`);
     }
+
     if(sumaCartiDealer >= 17 && sumaCartiDealer < 22 && esteTuraDealerului){
       if(sumaCartiDealer > sumaCartiJucator){
         seteazaCastigatorul("Dealerul");
@@ -330,14 +328,19 @@ useEffect(() => {
         seteazaCastigatorul("Jucatorul 1");
         seteazaManaCompleta(true);
       }
+
       if(sumaCartiDealer === sumaCartiJucator && !estePlayerulPrins){
+        seteazaCastigatorul("egalitate");
+        seteazaManaCompleta(true);
+        }
+      }
+      if(sumaCartiDealer < 17 && esteTuraDealerului && !estePlayerulPrins){
         setTimeout(() => {
           extrageCarte();
-        },700)
-      }
+        },500)
     }
   }
-},[sumaCartiDealer])
+},[sumaCartiDealer]);
 
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
   useEffect(() => {
@@ -349,8 +352,34 @@ useEffect(() => {
     seteazaSumaCartiDealer(cartiD);
   }, [cartiD]);
 
+  //useEffect pentru castig
   useEffect(() => {
-  },[])
+    if(castigatorul === 'Dealerul'){
+      seteazaSumaMiza(0);
+    }
+    //daca jucatorul 1 este castigator si nu este blackjack atunci facem miza * 2
+    if(castigatorul === 'Jucatorul 1' && !esteBlackJack) {
+    if(esteDublaj) {
+      //daca este dublaj atunci facem miza * 4
+      seteazaNumarJetoane(numarJetoane + mizaAnterioara * 4);
+    }else {
+      seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2);
+    }
+  }
+    //daca jucatorul 1 este castigator si este blackjack atunci facem miza * 2.5
+    if(castigatorul === 'Jucatorul 1' && esteBlackJack) {
+       seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2.5);
+    }
+    //daca este meci egal se va returna dublul mizei anterioare
+    if(castigatorul === 'egalitate') {
+       if(esteDublaj) {
+         seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2);
+       }else {
+         //daca nu se va returna fix miza anterioara
+         seteazaNumarJetoane(numarJetoane + mizaAnterioara);
+       }
+    }
+  },[castigatorul]);
 
 
   return (
@@ -372,6 +401,10 @@ useEffect(() => {
           castigatorul={castigatorul}
           esteJetonBlocat={esteJetonBlocat}
           mizaAnterioara={mizaAnterioara}
+          esteBlackJack={esteBlackJack}
+          esteDublaj={esteDublaj}
+          esteDealerulPrins={esteDealerulPrins}
+          estePlayerulPrins={estePlayerulPrins}
         />
         {/* Chips component */}
         <div className="jetoane-butoane-container">
