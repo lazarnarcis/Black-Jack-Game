@@ -132,8 +132,9 @@ const App = () => {
   const [estePlayerulPrins, seteazaEstePlayerulPrins] = useState(false);
   const [esteBlackJack, seteazaEsteBlackJack] = useState(false);
   const [esteDublaj, seteazaEsteDublaj] = useState(false);
-  const [esteTuraJucatorului, seteazaTuraJucatorului] = useState(true);
   const [inceputJoc, seteazaInceputJoc] = useState(false);
+  const [impartireCarti, seteazaImpartireCarti] = useState([]);
+  const [esteImpartire, seteazaEsteImpartire] = useState(false);
 
 
   const amestecaCartile = (carti) => {
@@ -160,13 +161,12 @@ const App = () => {
       return (prevCard += currentCard.cardValue);
     }, 0);
 //daca exista un ACE cu valoarea 1 si suma cartilor este < 11 adauga 10
-    return verificaAS() && suma < 11 ? (suma += 10) : suma;
-    // if (verificaAS() && suma < 11) {
-    //   return (suma += 10);
-    // } else {
-    //   //daca exista un ACE cu valoarea 1 si suma cartilor este > 21 scade 10 -> (ex pt 3 carti cu suma 27 + un as cu val 1-> total 28 se scade 10)
-    //   return suma;
-    // }
+    if((verificaAS()
+    && suma < 11) ||
+     (verificaAS() && carti.length === 2 && suma === 11)) {
+     return suma += 10;
+    }
+      return suma;
   }
 
 
@@ -206,9 +206,7 @@ const App = () => {
   const extrageCarte = () => {
       const pachetRandomCarti = generarePachetRandomCarti();
       let pachetCartiCurent = [...pachetRandomCarti];
-    //  console.log(`PachetCarti:${JSON.stringify(pachetCartiCurent)}`);
       let urmatoareaCarte = pachetCartiCurent.slice(0,1)[0];
-     // console.log(`urmtoareaCarte:${JSON.stringify(urmatoareaCarte)}`);
       if(esteTuraDealerului){
         seteazaCartiDealer([...cartiDealer, urmatoareaCarte]);
         scorMana(cartiDealer);
@@ -231,7 +229,6 @@ const App = () => {
 
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
-  console.log("UseEffect inceput joc");
   //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
   if(cartiJucator.length === 2
     && sumaCartiJucator === 21
@@ -240,6 +237,7 @@ useEffect(() => {
       seteazaCastigatorul("Jucatorul 1");
       seteazaManaCompleta(true);
       seteazaTuraDealerului(true);
+      seteazaInceputJoc(false);
     }
   //verificam daca Dealerul a castigat
   if(cartiDealer.length === 2
@@ -249,16 +247,19 @@ useEffect(() => {
       seteazaCastigatorul("Dealerul");
       seteazaManaCompleta(true);
       seteazaTuraDealerului(true);
+      seteazaInceputJoc(false);
     }
   //verificam daca e scor egal
   if(cartiDealer.length === 2
-    && cartiJucator === 2
+    && cartiJucator.length === 2
     && sumaCartiJucator === 21
     && sumaCartiDealer === 21){
      seteazaCastigatorul("egalitate");
      seteazaManaCompleta(true);
      seteazaTuraDealerului(true);
+     seteazaInceputJoc(false);
     }
+
 })
 //useEffect pentru randul jucatorului
 useEffect(() => {
@@ -274,49 +275,41 @@ useEffect(() => {
 },[sumaCartiJucator]);
 
 useEffect(() => {
-  console.log("Use effect esteTuraDealerului");
   if(inceputJoc){
   if(esteTuraDealerului
     && sumaCartiDealer < 17
     && !estePlayerulPrins
     && castigatorul !== 'Jucatorul 1'){
-      console.log("sumaCartiDealer < 17");
+      console.count("extrage carte esteTuraDealerului useEffect");
       setTimeout(() => {
         extrageCarte();
       },500);
     }
     if(esteTuraDealerului && sumaCartiDealer >= 17 && sumaCartiDealer <= 21 && !estePlayerulPrins){
         if(sumaCartiDealer > sumaCartiJucator){
-          console.log(`1ifsumaDealer:${sumaCartiDealer}`)
-          console.log(`1ifsumaJucator:${sumaCartiJucator}`)
           seteazaCastigatorul("Dealerul");
           seteazaManaCompleta(true);
         }
         if(sumaCartiDealer < sumaCartiJucator){
-          console.log(`2ifsumaDealer:${sumaCartiDealer}`)
-          console.log(`2ifsumaJucator:${sumaCartiJucator}`)
           seteazaCastigatorul("Jucatorul 1");
           seteazaManaCompleta(true);
         }
         if(sumaCartiDealer === sumaCartiJucator){
-          console.log(`3ifsumaDealer:${sumaCartiDealer}`)
-          console.log(`3ifsumaJucator:${sumaCartiJucator}`)
           seteazaCastigatorul("egalitate");
-          seteazaManaCompleta(true)
+          seteazaManaCompleta(true);
         }
       }
-  }
+    }
 },[esteTuraDealerului])
 
 useEffect(() => {
   if(inceputJoc){
-    console.log(`Suma carti dealer ${sumaCartiDealer}`);
+    console.count(`Suma carti dealer useEffect`);
     if(sumaCartiDealer > 21){
       console.log("Suma carti dealer > 21");
       seteazaEsteDealerulPrins(true);
-      seteazaCastigatorul("Playerul 1");
+      seteazaCastigatorul("Jucatorul 1");
       seteazaManaCompleta(true);
-      console.log(`${esteDealerulPrins}`);
     }
 
     if(sumaCartiDealer >= 17 && sumaCartiDealer < 22 && esteTuraDealerului){
@@ -335,6 +328,7 @@ useEffect(() => {
         }
       }
       if(sumaCartiDealer < 17 && esteTuraDealerului && !estePlayerulPrins){
+        console.count("extrage carte sumaCartiDealer useEffect");
         setTimeout(() => {
           extrageCarte();
         },500)
@@ -405,6 +399,7 @@ useEffect(() => {
           esteDublaj={esteDublaj}
           esteDealerulPrins={esteDealerulPrins}
           estePlayerulPrins={estePlayerulPrins}
+          esteImpartire={esteImpartire}
         />
         {/* Chips component */}
         <div className="jetoane-butoane-container">
@@ -445,6 +440,7 @@ useEffect(() => {
               seteazaInceputJoc={seteazaInceputJoc}
               extrageCarte={extrageCarte}
               mizaAnterioara={mizaAnterioara}
+              seteazaEsteImpartire={seteazaEsteImpartire}
             />
         </div>
       </div>

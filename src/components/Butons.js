@@ -31,7 +31,8 @@ const Butons = ({
   esteDealerulPrins,
   seteazaInceputJoc,
   extrageCarte,
-  mizaAnterioara
+  mizaAnterioara,
+  seteazaEsteImpartire
 }) => {
 
   const startMana = () => {
@@ -64,6 +65,10 @@ const Butons = ({
     }
   }
 
+  const cartiAcceasiValoare = () => {
+    return cartiJucator[0].cardValue === cartiJucator[1].cardValue;
+  }
+
   const gestioneazaHit = () => {
     //verificam daca sumaCartilorJucatorului este mai mica de 21 si daca nu este tura dealerului si daca castigatorul nu este dealerul si daca nu este blackjack
     if(sumaCartiJucator < 21
@@ -83,7 +88,17 @@ const Butons = ({
   }
 
   const gestioneazaDublaj = () => {
-    console.log("Dublaj button hit!");
+    // console.log("Dublaj button hit!");
+    if(!esteTuraDealerului
+      && cartiJucator.length === 2
+      && numarJetoane >= mizaAnterioara){
+        extrageCarte();
+        setTimeout(() => {
+          seteazaTuraDealerului(true);
+        },1000);
+        seteazaEsteDublaj(true);
+        seteazaNumarJetoane(numarJetoane - mizaAnterioara);
+      }
   }
 
  const gestioneazaAcceasiMiza = () => {
@@ -91,16 +106,24 @@ const Butons = ({
     && (numarJetoane >= mizaAnterioara)
     && (mizaAnterioara > 0)) {
       imparteCartile();
+      seteazaEsteImpartire(false);
       seteazaManaCompleta(false);
       seteazaCastigatorul("");
       seteazaEsteDealerulPrins(false);
       seteazaEstePlayerulPrins(false);
       seteazaTuraDealerului(false);
       seteazaBlocheazaMiza(0);
+      seteazaInceputJoc(true);
       seteazaEsteBlackJack(false);
       seteazaNumarJetoane(numarJetoane - mizaAnterioara);
       seteazaEsteDublaj(false);
     }
+ }
+
+ const gestioneazaSplit = () => {
+   if(!esteTuraDealerului && cartiJucator.length === 2 && !esteDealerulPrins){
+    seteazaEsteImpartire(true);
+   }
  }
 
 
@@ -119,16 +142,18 @@ const Butons = ({
         </div>
         :
         <div className="btn-play">
-        <button  className='btn' onClick={gestioneazaHit}>hit</button>
-        <button  className='btn' onClick={gestioneazaStay}>stay</button>
+        <button  className='btn' onClick={gestioneazaHit}>Trage Carte</button>
+        <button  className='btn' onClick={gestioneazaStay}>Stai</button>
         <button
         className={(cartiJucator.length === 2 && numarJetoane >= mizaAnterioara) ? 'btn' : 'btn-disabled'}
         onClick={cartiJucator.length !== 2 ? () => {return 0} : gestioneazaDublaj}
-        >double</button>
+        >Dubleaza</button>
+        <button className ={(cartiJucator.length === 2)
+        &&
+        cartiAcceasiValoare() ? 'btn' : 'btn-disabled'}
+        onClick={cartiAcceasiValoare() && cartiJucator.length === 2 ?  gestioneazaSplit : () =>{return 0}}>Imparte</button>
       </div>
         }
-
-
       </>
     )
 

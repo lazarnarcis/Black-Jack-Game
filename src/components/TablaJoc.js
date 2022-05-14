@@ -17,13 +17,14 @@ const TablaJoc = (
     esteBlackJack,
     esteDublaj,
     esteDealerulPrins,
-    estePlayerulPrins
+    estePlayerulPrins,
+    esteImpartire
 }) => {
 
 
     return (
         <div className="tabla-joc">
-       { (esteManaCompleta || esteTuraDealerului)  && <div className="scor-dealer">Carti Dealer - {sumaCartiDealer}</div>}
+       { (esteManaCompleta || esteTuraDealerului)  && <div className="scor-dealer">Suma Carti Dealer - {sumaCartiDealer}</div>}
           <div className="carti-dealer">
 
             { esteTuraDealerului ? (cartiDealer?.map((carte,index) =>
@@ -41,7 +42,8 @@ const TablaJoc = (
 
       { esteJetonBlocat && <p className="jeton-empty">
         <img src={jetonValoare_empty} alt="jeton_gol" />
-        <span className="blockedSum">{blocheazaSumaMiza === 0 ? mizaAnterioara : blocheazaSumaMiza}</span>
+      { !esteDublaj && <span className="blockedSum">{blocheazaSumaMiza === 0 ? mizaAnterioara : blocheazaSumaMiza}</span>}
+        { esteDublaj && <span className="blockedSum">{mizaAnterioara * 4}</span>}
       {castigatorul && <span className="info-win">
         {castigatorul === "Jucatorul 1" && esteBlackJack ? `BlackJack! Jucatorul 1 castiga ${mizaAnterioara + mizaAnterioara * 1.5} jetoane`
         : castigatorul === "Jucatorul 1" && esteDublaj ? `Jucatorul 1 a dublat si castiga ${mizaAnterioara * 4} jetoane`
@@ -61,16 +63,14 @@ const TablaJoc = (
         { castigatorul && <button className='btn' style={{margin:0}} onClick={() => window.location.reload()}>Reseteaza Joc</button>}
 
 {/* carti jucator */}
-      <div className="scor-dealer">Carti Jucator - {sumaCartiJucator}</div>
-          <div className="carti-dealer">
+      <div className="scor-dealer">Suma Carti Jucator - {sumaCartiJucator}</div>
+          <div className={esteImpartire ? "carti-split" : "carti-jucator"}>
 
-            {cartiJucator?.map((carte,index) =>
-            <div key={index} className="card">
+             {cartiJucator.map((carte,index) =>
+            <div key={index} className={esteDublaj && index === 2 ? 'carte-dublaj' : ''}>
             <img src={carte.img} alt="noPic"/>
             </div>)}
-
           </div>
-
       </div>
 
     )

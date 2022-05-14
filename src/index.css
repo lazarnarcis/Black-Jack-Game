@@ -135,9 +135,16 @@ html {
 }
 
 
-.carti-dealer {
+.carti-dealer, .carti-jucator {
   display: flex;
+  width: 100%;
   justify-content: center;
+}
+
+.carti-split {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 .jeton-empty {
