@@ -230,18 +230,18 @@ const App = () => {
       }
   }
 
-  const imparteCartileTest = () => {
-    seteazaCartiJucator(
-      [
-      { name: "9IR", img: noua_inima_rosie, cardValue: 9 },
-      { name: "9T", img: noua_trefla, cardValue: 9 }
-    ]
-    );
-    seteazaCartiDealer([
-      { name: "6T", img: sase_trefla, cardValue: 6 },
-      { name: "6R", img: sase_romb, cardValue: 6 },
-    ]);
-  }
+  // const imparteCartileTest = () => {
+  //   seteazaCartiJucator(
+  //     [
+  //     { name: "9IR", img: noua_inima_rosie, cardValue: 9 },
+  //     { name: "9T", img: noua_trefla, cardValue: 9 }
+  //   ]
+  //   );
+  //   seteazaCartiDealer([
+  //     { name: "6T", img: sase_trefla, cardValue: 6 },
+  //     { name: "6R", img: sase_romb, cardValue: 6 },
+  //   ]);
+  // }
 
 
   const cartiJ = scorMana(cartiJucator);
@@ -497,7 +497,7 @@ useEffect(() => {
               mizaAnterioara={mizaAnterioara}
               seteazaEsteImpartire={seteazaEsteImpartire}
               cartiJucatorSplit={cartiJucatorSplit}
-             imparteCartileTest={imparteCartileTest}
+             //imparteCartileTest={imparteCartileTest}
              seteazaCartiJucatorSplit={seteazaCartiJucatorSplit}
              esteImpartire={esteImpartire}
             />
