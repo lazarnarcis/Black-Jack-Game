@@ -23,7 +23,6 @@ const Butons = ({
   seteazaEstePlayerulPrins,
   seteazaEsteDublaj,
   sumaCartiJucator,
-  generarePachetRandomCarti,
   seteazaCartiJucator,
   esteBlackJack,
   castigatorul,
@@ -32,12 +31,18 @@ const Butons = ({
   seteazaInceputJoc,
   extrageCarte,
   mizaAnterioara,
-  seteazaEsteImpartire
+  seteazaEsteImpartire,
+  imparteCartileTest,
+  cartiJucatorSplit,
+  seteazaCartiJucatorSplit,
+  esteImpartire
 }) => {
+
 
   const startMana = () => {
     if(esteManaCompleta && blocheazaSumaMiza > 0) {
-      imparteCartile();
+      //imparteCartile();
+      imparteCartileTest();
       seteazaTuraDealerului(false); // setam tura dealerului in false
       seteazaMizaAnterioara(blocheazaSumaMiza);
       seteazaEsteBlackJack(false);
@@ -69,6 +74,7 @@ const Butons = ({
     return cartiJucator[0].cardValue === cartiJucator[1].cardValue;
   }
 
+
   const gestioneazaHit = () => {
     //verificam daca sumaCartilorJucatorului este mai mica de 21 si daca nu este tura dealerului si daca castigatorul nu este dealerul si daca nu este blackjack
     if(sumaCartiJucator < 21
@@ -88,7 +94,6 @@ const Butons = ({
   }
 
   const gestioneazaDublaj = () => {
-    // console.log("Dublaj button hit!");
     if(!esteTuraDealerului
       && cartiJucator.length === 2
       && numarJetoane >= mizaAnterioara){
@@ -106,6 +111,7 @@ const Butons = ({
     && (numarJetoane >= mizaAnterioara)
     && (mizaAnterioara > 0)) {
       imparteCartile();
+     // imparteCartileTest();
       seteazaEsteImpartire(false);
       seteazaManaCompleta(false);
       seteazaCastigatorul("");
@@ -120,10 +126,18 @@ const Butons = ({
     }
  }
 
+
  const gestioneazaSplit = () => {
-   if(!esteTuraDealerului && cartiJucator.length === 2 && !esteDealerulPrins){
-    seteazaEsteImpartire(true);
+  seteazaEsteImpartire(true);
+   if(!esteTuraDealerului && cartiJucator.length === 2 && cartiAcceasiValoare()){
+     setTimeout(() => {
+      seteazaCartiJucator([cartiJucator[0], cartiJucatorSplit[1]]);
+      seteazaCartiJucatorSplit([cartiJucator[1],cartiJucatorSplit[0]]);
+     },300)
+     seteazaTuraDealerului(true);
+     seteazaNumarJetoane(numarJetoane - mizaAnterioara);
    }
+
  }
 
 
@@ -142,7 +156,7 @@ const Butons = ({
         </div>
         :
         <div className="btn-play">
-        <button  className='btn' onClick={gestioneazaHit}>Trage Carte</button>
+        <button  className={esteImpartire ? 'btn-disabled' : 'btn'} onClick={esteImpartire ? ()=> {return 0} : gestioneazaHit}>Trage Carte</button>
         <button  className='btn' onClick={gestioneazaStay}>Stai</button>
         <button
         className={(cartiJucator.length === 2 && numarJetoane >= mizaAnterioara) ? 'btn' : 'btn-disabled'}
