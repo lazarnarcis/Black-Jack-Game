@@ -19,12 +19,24 @@ const Jeton = ({
   return(
   <>
           { blocheazaSumaMiza === 0 && esteManaCompleta ? (<div className="jetoane">
-              <img src={jetonValoare_5} alt="jeton_5" onClick={() => gestioneazaValoareJeton(5)} />
-              <img src={jetonValoare_25} alt="jeton_25" onClick={() => gestioneazaValoareJeton(25)}/>
-              <img src={jetonValoare_100} alt="jeton_100" onClick={() => gestioneazaValoareJeton(100)}/>
-              <img src={jetonValoare_500} alt="jeton_500" onClick={() => gestioneazaValoareJeton(500)}/>
-              <img src={jetonValoare_1000} alt="jeton_1000" onClick={() => gestioneazaValoareJeton(1000)} />
-              <img src={jetonValoare_10k} alt="jeton_10000" onClick={() => gestioneazaValoareJeton(10000)}/>
+              <img src={jetonValoare_5}
+              alt="jeton_5"
+              onClick={() => gestioneazaValoareJeton(5)} />
+              <img src={jetonValoare_25}
+              alt="jeton_25"
+              onClick={() => gestioneazaValoareJeton(25)}/>
+              <img src={jetonValoare_100}
+              alt="jeton_100"
+              onClick={() => gestioneazaValoareJeton(100)}/>
+              <img src={jetonValoare_500}
+              alt="jeton_500"
+              onClick={() => gestioneazaValoareJeton(500)}/>
+              <img src={jetonValoare_1000}
+              alt="jeton_1000"
+              onClick={() => gestioneazaValoareJeton(1000)} />
+              <img src={jetonValoare_10k}
+              alt="jeton_10000"
+              onClick={() => gestioneazaValoareJeton(10000)}/>
             </div>) : null
           }
   </>

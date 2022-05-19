@@ -35,7 +35,8 @@ const Butons = ({
   imparteCartileTest,
   cartiJucatorSplit,
   seteazaCartiJucatorSplit,
-  esteImpartire
+  esteImpartire,
+  seteazaSumaCartiJucator
 }) => {
 
 
@@ -110,7 +111,7 @@ const Butons = ({
     if((esteManaCompleta)
     && (numarJetoane >= mizaAnterioara)
     && (mizaAnterioara > 0)) {
-      imparteCartile();
+      seteazaSumaCartiJucator(0);
       seteazaEsteImpartire(false);
       seteazaManaCompleta(false);
       seteazaCastigatorul("");
@@ -118,7 +119,7 @@ const Butons = ({
       seteazaEstePlayerulPrins(false);
       seteazaTuraDealerului(false);
       seteazaBlocheazaMiza(0);
-      seteazaInceputJoc(true);
+      imparteCartile();
       seteazaEsteBlackJack(false);
       seteazaNumarJetoane(numarJetoane - mizaAnterioara);
       seteazaEsteDublaj(false);
