@@ -7,11 +7,18 @@ import Jeton from "./components/Jeton";
 import Butons from "./components/Butons";
 import { useState, useEffect } from "react";
 import { intialCards } from "./pacheCarti";
+import noua_inima_rosie from "./cardsImages/9inima_rosie.png";
+import noua_trefla from "./cardsImages/9trefla.png";
+import sase_trefla from "./cardsImages/6trefla.png";
+import sase_romb from "./cardsImages/6romb.png";
+import { v4 as uuidv4 } from 'uuid';
+import MyModal from "./components/MyModal";
 
 
 
 const App = () => {
   const [carti, seteazaCarti] = useState(intialCards);
+  const [inceputJoc, seteazaInceputJoc] = useState(false);
   const [cartiJucator, seteazaCartiJucator] = useState([]);
   const [cartiDealer, seteazaCartiDealer] = useState([]);
   const [esteManaCompleta, seteazaManaCompleta] = useState(true);
@@ -28,15 +35,14 @@ const App = () => {
   const [estePlayerulPrins, seteazaEstePlayerulPrins] = useState(false);
   const [esteBlackJack, seteazaEsteBlackJack] = useState(false);
   const [esteDublaj, seteazaEsteDublaj] = useState(false);
-  const [inceputJoc, seteazaInceputJoc] = useState(false);
   const [cartiJucatorSplit, seteazaCartiJucatorSplit] = useState([]);
   const [esteImpartire, seteazaEsteImpartire] = useState(false);
   const [sumaCartiJucatorSplit,seteazaSumaCartiJucatorSplit] = useState(0);
 
-
   const amestecaCartile = (carti) => {
     //se parcurg cartile de joc de la ultima carte pana la prima
-    for (let i = carti.length - 1; i >= 0; i--) {
+    for (let i = carti.length - 1; i >= 0; i--)
+    {
       //se creaza un index j care va stoca un nr intreg intre 0 si 51
       let j = Math.floor(Math.random() * i); // pp = 2
       let temp = carti[i]; //temp=51
@@ -60,7 +66,8 @@ const App = () => {
 //daca exista un ACE cu valoarea 1 si suma cartilor este < 11 adauga 10
     if((verificaAS()
     && suma < 11) ||
-     (verificaAS() && carti.length === 2 && suma === 11)) {
+     (verificaAS() && carti.length === 2 && suma === 11))
+    {
      return suma += 10;
     }
       return suma;
@@ -76,11 +83,13 @@ const App = () => {
     const extrageCarti = carti.slice(0, 6);
     seteazaCartiJucator([
       {
+        id:uuidv4(),
         name: extrageCarti[0].name,
         img: extrageCarti[0].img,
         cardValue: extrageCarti[0].cardValue
       },
       {
+        id:uuidv4(),
         name: extrageCarti[1].name,
         img: extrageCarti[1].img,
         cardValue: extrageCarti[1].cardValue
@@ -88,11 +97,13 @@ const App = () => {
     ]);
     seteazaCartiDealer([
       {
+        id:uuidv4(),
         name: extrageCarti[2].name,
         img: extrageCarti[2].img,
         cardValue: extrageCarti[2].cardValue
       },
       {
+        id:uuidv4(),
         name: extrageCarti[3].name,
         img: extrageCarti[3].img,
         cardValue: extrageCarti[3].cardValue
@@ -100,11 +111,13 @@ const App = () => {
     ]);
     seteazaCartiJucatorSplit([
       {
+        id:uuidv4(),
         name: extrageCarti[4].name,
         img: extrageCarti[4].img,
         cardValue: extrageCarti[4].cardValue
       },
       {
+        id:uuidv4(),
         name: extrageCarti[5].name,
         img: extrageCarti[5].img,
         cardValue: extrageCarti[5].cardValue
@@ -117,10 +130,13 @@ const App = () => {
       const pachetRandomCarti = generarePachetRandomCarti();
       let pachetCartiCurent = [...pachetRandomCarti];
       let urmatoareaCarte = pachetCartiCurent.slice(0,1)[0];
-      if(esteTuraDealerului){
+      if(esteTuraDealerului)
+      {
         seteazaCartiDealer([...cartiDealer, urmatoareaCarte]);
         scorMana(cartiDealer);
-      }else{
+      }
+      else
+      {
         seteazaCartiJucator([...cartiJucator, urmatoareaCarte]);
         scorMana(cartiJucator);
       }
@@ -129,13 +145,13 @@ const App = () => {
   // const imparteCartileTest = () => {
   //   seteazaCartiJucator(
   //     [
-  //     { name: "9IR", img: noua_inima_rosie, cardValue: 9 },
-  //     { name: "9T", img: noua_trefla, cardValue: 9 }
+  //     { id:uuidv4(), name: "9IR", img: noua_inima_rosie, cardValue: 9 },
+  //     { id:uuidv4(), name: "9T", img: noua_trefla, cardValue: 9 }
   //   ]
   //   );
   //   seteazaCartiDealer([
-  //     { name: "6T", img: sase_trefla, cardValue: 6 },
-  //     { name: "6R", img: sase_romb, cardValue: 6 },
+  //     { id:uuidv4(), name: "6T", img: sase_trefla, cardValue: 6 },
+  //     { id:uuidv4(), name: "6R", img: sase_romb, cardValue: 6 },
   //   ]);
   // }
 
@@ -153,10 +169,12 @@ const App = () => {
 
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
+  console.log("Check for BlackJack");
   //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
   if(cartiJucator.length === 2
     && sumaCartiJucator === 21
-    && sumaCartiDealer !== 21){
+    && sumaCartiDealer !== 21)
+    {
       seteazaEsteBlackJack(true);
       seteazaCastigatorul("Jucatorul 1");
       seteazaManaCompleta(true);
@@ -165,7 +183,8 @@ useEffect(() => {
   //verificam daca Dealerul a castigat
   if(cartiDealer.length === 2
     && sumaCartiDealer === 21
-    && sumaCartiJucator !== 21) {
+    && sumaCartiJucator !== 21)
+    {
       seteazaEsteBlackJack(true);
       seteazaCastigatorul("Dealerul");
       seteazaManaCompleta(true);
@@ -175,18 +194,20 @@ useEffect(() => {
   if(cartiDealer.length === 2
     && cartiJucator.length === 2
     && sumaCartiJucator === 21
-    && sumaCartiDealer === 21){
+    && sumaCartiDealer === 21)
+    {
      seteazaCastigatorul("egalitate");
      seteazaManaCompleta(true);
      seteazaTuraDealerului(true);
     }
-
 })
 //useEffect pentru randul jucatorului
 useEffect(() => {
+
   //daca suma cartilor jucatorului este > 21 acesta a pierdut. Functia useEffect se apeleaza de fiecare data cand variabila sumaCartiJucator este actualizata
 
- if(sumaCartiJucator > 21) {
+ if(sumaCartiJucator > 21)
+ {
     seteazaCastigatorul("Dealerul");
     seteazaEstePlayerulPrins(true);
     seteazaManaCompleta(true);
@@ -196,13 +217,16 @@ useEffect(() => {
 },[sumaCartiJucator]);
 
 useEffect(() => {
-  if(inceputJoc){
+  let timeOut;
+  console.count("Dealer's turn useEffect run");
+  if(inceputJoc)
+  {
   if(esteTuraDealerului
     && sumaCartiDealer < 17
     && !estePlayerulPrins
     && castigatorul !== 'Jucatorul 1'){
       console.count("extrage carte esteTuraDealerului useEffect");
-      setTimeout(() => {
+      timeOut = setTimeout(() => {
         extrageCarte();
       },500);
     }
@@ -210,75 +234,105 @@ useEffect(() => {
       if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) > sumaCartiDealer) {
         seteazaCastigatorul("Jucatorul 1");
         seteazaManaCompleta(true);
-      }else if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) < sumaCartiDealer) {
+      }else
+      {
         seteazaCastigatorul("Dealerul");
         seteazaManaCompleta(true);
-      }else {
+      }
+
+      if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) === sumaCartiDealer
+      && !estePlayerulPrins)
+      {
         seteazaCastigatorul("egalitate");
         seteazaManaCompleta(true);
       }
 
-
-        if(sumaCartiDealer > sumaCartiJucator){
+        if(sumaCartiDealer > sumaCartiJucator)
+        {
           seteazaCastigatorul("Dealerul");
           seteazaManaCompleta(true);
         }
-        if(sumaCartiDealer < sumaCartiJucator){
+        if(sumaCartiDealer < sumaCartiJucator)
+        {
           seteazaCastigatorul("Jucatorul 1");
           seteazaManaCompleta(true);
         }
-        if(sumaCartiDealer === sumaCartiJucator){
+        if(sumaCartiDealer === sumaCartiJucator)
+        {
           seteazaCastigatorul("egalitate");
           seteazaManaCompleta(true);
         }
       }
     }
+    return () =>
+    {
+      clearTimeout(timeOut);
+    }
 },[esteTuraDealerului])
 
 useEffect(() => {
-    if(sumaCartiDealer > 21){
+  let timeOut;
+  console.count("Suma cartiDealer useEffect run");
+    if(sumaCartiDealer > 21)
+    {
       seteazaEsteDealerulPrins(true);
       seteazaCastigatorul("Jucatorul 1");
       seteazaManaCompleta(true);
     }
-    console.log("suma carti dealer")
-    if(sumaCartiDealer >= 17 && sumaCartiDealer < 22 && esteTuraDealerului){
+
+    if(sumaCartiDealer >= 17 && sumaCartiDealer < 22 && esteTuraDealerului)
+    {
       if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) > sumaCartiDealer
       && !estePlayerulPrins){
         seteazaCastigatorul("Jucatorul 1");
         seteazaManaCompleta(true);
-      }else if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) < sumaCartiDealer
-      && !estePlayerulPrins) {
+      }
+      else
+      {
         seteazaCastigatorul("Dealerul");
         seteazaManaCompleta(true);
-      }else {
+      }
+
+      if(esteImpartire && (sumaCartiJucator || sumaCartiJucatorSplit) === sumaCartiDealer
+      && !estePlayerulPrins)
+      {
         seteazaCastigatorul("egalitate");
         seteazaManaCompleta(true);
       }
 
-      if(sumaCartiDealer > sumaCartiJucator){
+      if(sumaCartiDealer > sumaCartiJucator)
+      {
         seteazaCastigatorul("Dealerul");
         seteazaManaCompleta(true);
       }
-      if(sumaCartiDealer < sumaCartiJucator && !estePlayerulPrins){
+      if(sumaCartiDealer < sumaCartiJucator && !estePlayerulPrins)
+      {
         seteazaCastigatorul("Jucatorul 1");
         seteazaManaCompleta(true);
       }
 
-      if(sumaCartiDealer === sumaCartiJucator && !estePlayerulPrins){
+      if(sumaCartiDealer === sumaCartiJucator && !estePlayerulPrins)
+      {
         seteazaCastigatorul("egalitate");
         seteazaManaCompleta(true);
         }
+  }
 
-
-      if(sumaCartiDealer < 17 && esteTuraDealerului && !estePlayerulPrins){
-        console.count("extrage carte sumaCartiDealer useEffect");
-        setTimeout(() => {
-          extrageCarte();
-        },500)
+    if(sumaCartiDealer < 17 && esteTuraDealerului && !estePlayerulPrins && inceputJoc)
+    {
+      console.count("extrage carte sumaCartiDealer useEffect");
+      timeOut = setTimeout(() =>
+      {
+        extrageCarte();
+      },500)
     }
+  return () => {
+    clearTimeout(timeOut);
   }
 },[sumaCartiDealer]);
+
+
+
 
   //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
   useEffect(() => {
@@ -296,30 +350,39 @@ useEffect(() => {
 
   //useEffect pentru castig
   useEffect(() => {
-    if(castigatorul === 'Dealerul'){
+    if(castigatorul === 'Dealerul')
+    {
       seteazaSumaMiza(0);
     }
     //daca jucatorul 1 este castigator si nu este blackjack atunci facem miza * 2
-    if(castigatorul === 'Jucatorul 1' && !esteBlackJack) {
-    if(esteDublaj) {
+    if(castigatorul === 'Jucatorul 1' && !esteBlackJack)
+    {
+    if(esteDublaj)
+    {
       //daca este dublaj atunci facem miza * 4
       seteazaNumarJetoane(numarJetoane + mizaAnterioara * 4);
-    }else {
+    }else
+    {
       seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2);
     }
-    if(esteImpartire && castigatorul === 'Jucatorul 1' && !esteBlackJack){
+    if(esteImpartire && castigatorul === 'Jucatorul 1' && !esteBlackJack)
+    {
       seteazaNumarJetoane(numarJetoane + mizaAnterioara);
     }
   }
     //daca jucatorul 1 este castigator si este blackjack atunci facem miza * 2.5
-    if(castigatorul === 'Jucatorul 1' && esteBlackJack) {
+    if(castigatorul === 'Jucatorul 1' && esteBlackJack)
+    {
        seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2.5);
     }
     //daca este meci egal se va returna dublul mizei anterioare
-    if(castigatorul === 'egalitate') {
-       if(esteDublaj) {
+    if(castigatorul === 'egalitate')
+    {
+       if(esteDublaj)
+       {
          seteazaNumarJetoane(numarJetoane + mizaAnterioara * 2);
-       }else {
+       }else
+       {
          //daca nu se va returna fix miza anterioara
          seteazaNumarJetoane(numarJetoane + mizaAnterioara);
        }
@@ -334,6 +397,7 @@ useEffect(() => {
 
       {/* GameTable component */}
       <div className="App">
+        <MyModal />
         <TablaJoc
           sumaCartiDealer={sumaCartiDealer}
           cartiDealer={cartiDealer}
@@ -353,8 +417,10 @@ useEffect(() => {
           esteImpartire={esteImpartire}
           sumaCartiJucatorSplit={sumaCartiJucatorSplit}
           cartiJucatorSplit={cartiJucatorSplit}
+          seteazaCastigatorul={seteazaCastigatorul}
         />
-        {/* Chips component */}
+
+        {/* jetoane component */}
         <div className="jetoane-butoane-container">
           <Jeton
             esteManaCompleta={esteManaCompleta}
@@ -362,7 +428,7 @@ useEffect(() => {
             sumaMiza={sumaMiza}
             blocheazaSumaMiza={blocheazaSumaMiza}
           />
-          {/* buttons component */}
+          {/* butoane component */}
             <Butons
               imparteCartile={imparteCartile}
               blocheazaSumaMiza={blocheazaSumaMiza}
@@ -395,7 +461,7 @@ useEffect(() => {
               mizaAnterioara={mizaAnterioara}
               seteazaEsteImpartire={seteazaEsteImpartire}
               cartiJucatorSplit={cartiJucatorSplit}
-             //imparteCartileTest={imparteCartileTest}
+            // imparteCartileTest={imparteCartileTest}
              seteazaCartiJucatorSplit={seteazaCartiJucatorSplit}
              esteImpartire={esteImpartire}
             />
