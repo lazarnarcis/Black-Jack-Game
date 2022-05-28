@@ -6,7 +6,7 @@ import TablaJoc from "./components/TablaJoc";
 import Jeton from "./components/Jeton";
 import Butons from "./components/Butons";
 import { useState, useEffect } from "react";
-import { intialCards } from "./pacheCarti";
+import { intialCards } from "./pachetCarti";
 import noua_inima_rosie from "./cardsImages/9inima_rosie.png";
 import noua_trefla from "./cardsImages/9trefla.png";
 import sase_trefla from "./cardsImages/6trefla.png";
