@@ -393,11 +393,11 @@ useEffect(() => {
   return (
     <>
       {/* navigation component */}
-      <Nav sumaMiza={sumaMiza} numarJetoane={numarJetoane} />
-
+      <Nav sumaMiza={sumaMiza} numarJetoane={numarJetoane}
+      />
+      <MyModal />
       {/* GameTable component */}
       <div className="App">
-        <MyModal />
         <TablaJoc
           sumaCartiDealer={sumaCartiDealer}
           cartiDealer={cartiDealer}

@@ -51,9 +51,6 @@ html {
 }
 
 
-.App {
-}
-
 .tabla-joc {
   background-image: url('./cardsImages/tabla-joc.jpg');
   display: flex;
@@ -62,10 +59,9 @@ html {
   align-items: center;
   border-radius: 200px;
   width: 70%;
-  border: var(--mainGreen) 15px solid;
   margin:0 auto;
   height: 80vh;
-  margin-top: 5px;
+  margin-top: -36px;
 }
 
 .butoane-start {
@@ -148,7 +144,7 @@ html {
 .contoare-pariuJeton {
   display: flex;
   justify-content: flex-end;
-  margin-right: 5%;
+  margin-right: 1%;
   font-size: 2rem;
 
 }
