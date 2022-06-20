@@ -167,6 +167,20 @@ const App = () => {
     imparteCartile();
   }, []);
 
+  //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
+  useEffect(() => {
+    seteazaSumaCartiJucator(cartiJ);
+  }, [cartiJ]);
+
+  //use effect care se va executa de fiecare data cand se scorul se va schimba pt dealer
+  useEffect(() => {
+    seteazaSumaCartiDealer(cartiD);
+  }, [cartiD]);
+
+  useEffect(() => {
+    seteazaSumaCartiJucatorSplit(cartiJSp);
+  }, [cartiJSp]);
+
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
   console.log("Check for BlackJack");
@@ -331,22 +345,6 @@ useEffect(() => {
   }
 },[sumaCartiDealer]);
 
-
-
-
-  //use effect care se va executa de fiecare data cand se scorul se va schimba pt jucator
-  useEffect(() => {
-    seteazaSumaCartiJucator(cartiJ);
-  }, [cartiJ]);
-
-  //use effect care se va executa de fiecare data cand se scorul se va schimba pt dealer
-  useEffect(() => {
-    seteazaSumaCartiDealer(cartiD);
-  }, [cartiD]);
-
-  useEffect(() => {
-    seteazaSumaCartiJucatorSplit(cartiJSp);
-  }, [cartiJSp]);
 
   //useEffect pentru castig
   useEffect(() => {

@@ -151,7 +151,7 @@ const Butons = ({
         <button className={blocheazaSumaMiza > 0 ? 'btn' : 'btn-disabled'}
         onClick={startMana}
         >Start mana</button>
-        <button className="btn" onClick={gestioneazaAcceasiMiza}>Acceasi miza</button>
+        <button className={esteBlackJack ? 'btn-disabled' : "btn"} onClick={esteBlackJack ? () => {return 0} : gestioneazaAcceasiMiza}>Acceasi miza</button>
         <button className={sumaMiza > 0 ? 'btn': 'btn-disabled'} onClick={() => seteazaSumaMiza(0)}>Resetare Miza</button>
         </div>
         :

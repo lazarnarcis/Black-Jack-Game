@@ -35,6 +35,8 @@ const MyModal = () => {
         <header className="reguli-joc-header">Regulile jocului</header>
         <section>
           <ul className="reguli-joc-ul">
+          <li className="reguli_joc_li">Se selecteaza miza dorita apoi se apasa butonul plaseaza Miza</li>
+          <li className="reguli_joc_li">Miza se va afisa pe jeton, dupa se va apasa butonul Start Mana</li>
             <li className="reguli_joc_li">Blackjack - o mână cu totalul 21 din primele două cărți, deci formată dintr-un A și o carte cu valoare 10 (10,J,Q,K) (A poate avea valoarea 1 sau 11)</li>
             <li className="reguli_joc_li">Prins - o mână cu total mai mare de 21, automat pierzătoare</li>
             <li className="reguli_joc_li">Dublaj - opțiune prin care jucătorul dublează pariul și pe care o poate folosi o singură dată într-o mână. După dublare, jucătorul mai primește o singură carte și e obligat să se oprească indiferent de totalul obținut</li>
