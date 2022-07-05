@@ -65,7 +65,8 @@ const App = () => {
     }, 0);
 //daca exista un ACE cu valoarea 1 si suma cartilor este < 11 adauga 10
     if((verificaAS()
-    && suma < 11) ||
+    && suma < 11)
+    ||
      (verificaAS() && carti.length === 2 && suma === 11))
     {
      return suma += 10;
@@ -183,7 +184,6 @@ const App = () => {
 
 //use efect pentru a verifica daca exista blakJack in startul Jocului
 useEffect(() => {
-  console.log("Check for BlackJack");
   //daca suma cartilor jucatorului este 21 si a dealerului nu atunci castigatorul este jucatorul
   if(cartiJucator.length === 2
     && sumaCartiJucator === 21
@@ -232,14 +232,12 @@ useEffect(() => {
 
 useEffect(() => {
   let timeOut;
-  console.count("Dealer's turn useEffect run");
   if(inceputJoc)
   {
   if(esteTuraDealerului
     && sumaCartiDealer < 17
     && !estePlayerulPrins
     && castigatorul !== 'Jucatorul 1'){
-      console.count("extrage carte esteTuraDealerului useEffect");
       timeOut = setTimeout(() => {
         extrageCarte();
       },500);
@@ -286,7 +284,6 @@ useEffect(() => {
 
 useEffect(() => {
   let timeOut;
-  console.count("Suma cartiDealer useEffect run");
     if(sumaCartiDealer > 21)
     {
       seteazaEsteDealerulPrins(true);
@@ -397,71 +394,71 @@ useEffect(() => {
       {/* GameTable component */}
       <div className="App">
         <TablaJoc
-          sumaCartiDealer={sumaCartiDealer}
-          cartiDealer={cartiDealer}
-          esteTuraDealerului={esteTuraDealerului}
-          imparteCartile={imparteCartile}
-          blocheazaSumaMiza={blocheazaSumaMiza}
-          sumaCartiJucator={sumaCartiJucator}
-          cartiJucator={cartiJucator}
-          esteManaCompleta={esteManaCompleta}
-          castigatorul={castigatorul}
-          esteJetonBlocat={esteJetonBlocat}
-          mizaAnterioara={mizaAnterioara}
-          esteBlackJack={esteBlackJack}
-          esteDublaj={esteDublaj}
-          esteDealerulPrins={esteDealerulPrins}
-          estePlayerulPrins={estePlayerulPrins}
-          esteImpartire={esteImpartire}
-          sumaCartiJucatorSplit={sumaCartiJucatorSplit}
-          cartiJucatorSplit={cartiJucatorSplit}
-          seteazaCastigatorul={seteazaCastigatorul}
+        sumaCartiDealer={sumaCartiDealer}
+        cartiDealer={cartiDealer}
+        esteTuraDealerului={esteTuraDealerului}
+        imparteCartile={imparteCartile}
+        blocheazaSumaMiza={blocheazaSumaMiza}
+        sumaCartiJucator={sumaCartiJucator}
+        cartiJucator={cartiJucator}
+        esteManaCompleta={esteManaCompleta}
+        castigatorul={castigatorul}
+        esteJetonBlocat={esteJetonBlocat}
+        mizaAnterioara={mizaAnterioara}
+        esteBlackJack={esteBlackJack}
+        esteDublaj={esteDublaj}
+        esteDealerulPrins={esteDealerulPrins}
+        estePlayerulPrins={estePlayerulPrins}
+        esteImpartire={esteImpartire}
+        sumaCartiJucatorSplit={sumaCartiJucatorSplit}
+        cartiJucatorSplit={cartiJucatorSplit}
+        seteazaCastigatorul={seteazaCastigatorul}
         />
 
         {/* jetoane component */}
         <div className="jetoane-butoane-container">
-          <Jeton
-            esteManaCompleta={esteManaCompleta}
-            seteazaSumaMiza={seteazaSumaMiza}
-            sumaMiza={sumaMiza}
-            blocheazaSumaMiza={blocheazaSumaMiza}
+        <Jeton
+          esteManaCompleta={esteManaCompleta}
+          seteazaSumaMiza={seteazaSumaMiza}
+          sumaMiza={sumaMiza}
+          blocheazaSumaMiza={blocheazaSumaMiza}
           />
           {/* butoane component */}
-            <Butons
-              imparteCartile={imparteCartile}
-              blocheazaSumaMiza={blocheazaSumaMiza}
-              seteazaBlocheazaMiza={seteazaBlocheazaMiza}
-              seteazaSumaMiza={seteazaSumaMiza}
-              numarJetoane={numarJetoane}
-              sumaMiza={sumaMiza}
-              esteManaCompleta={esteManaCompleta}
-              seteazaTuraDealerului={seteazaTuraDealerului}
-              seteazaManaCompleta={seteazaManaCompleta}
-              seteazaNumarJetoane={seteazaNumarJetoane}
-              seteazaSumaCartiJucator={seteazaSumaCartiJucator}
-              esteTuraDealerului={esteTuraDealerului}
-              seteazaCastigatorul={seteazaCastigatorul}
-              seteazaBlocareJeton={seteazaBlocareJeton}
-              seteazaMizaAnterioara={seteazaMizaAnterioara}
-              seteazaEstePlayerulPrins={seteazaEstePlayerulPrins}
-              seteazaEsteDealerulPrins={seteazaEsteDealerulPrins}
-              seteazaEsteDublaj={seteazaEsteDublaj}
-              seteazaEsteBlackJack={seteazaEsteBlackJack}
-              sumaCartiJucator={sumaCartiJucator}
-              generarePachetRandomCarti={generarePachetRandomCarti}
-              seteazaCartiJucator={seteazaCartiJucator}
-              esteBlackJack={esteBlackJack}
-              castigatorul={castigatorul}
-              cartiJucator={cartiJucator}
-              esteDealerulPrins={esteDealerulPrins}
-              seteazaInceputJoc={seteazaInceputJoc}
-              extrageCarte={extrageCarte}
-              mizaAnterioara={mizaAnterioara}
-              seteazaEsteImpartire={seteazaEsteImpartire}
-              cartiJucatorSplit={cartiJucatorSplit}
+          <Butons
+            imparteCartile={imparteCartile}
+            blocheazaSumaMiza={blocheazaSumaMiza}
+            seteazaBlocheazaMiza={seteazaBlocheazaMiza}
+            seteazaSumaMiza={seteazaSumaMiza}
+            numarJetoane={numarJetoane}
+            sumaMiza={sumaMiza}
+            esteManaCompleta={esteManaCompleta}
+            seteazaTuraDealerului={seteazaTuraDealerului}
+            seteazaManaCompleta={seteazaManaCompleta}
+            seteazaNumarJetoane={seteazaNumarJetoane}
+            seteazaSumaCartiJucator={seteazaSumaCartiJucator}
+            esteTuraDealerului={esteTuraDealerului}
+            seteazaCastigatorul={seteazaCastigatorul}
+            seteazaBlocareJeton={seteazaBlocareJeton}
+            seteazaMizaAnterioara={seteazaMizaAnterioara}
+            seteazaEstePlayerulPrins={seteazaEstePlayerulPrins}
+            seteazaEsteDealerulPrins={seteazaEsteDealerulPrins}
+            seteazaEsteDublaj={seteazaEsteDublaj}
+            seteazaEsteBlackJack={seteazaEsteBlackJack}
+            sumaCartiJucator={sumaCartiJucator}
+          generarePachetRandomCarti={generarePachetRandomCarti}
+            seteazaCartiJucator={seteazaCartiJucator}
+            esteBlackJack={esteBlackJack}
+            castigatorul={castigatorul}
+            cartiJucator={cartiJucator}
+            esteDealerulPrins={esteDealerulPrins}
+            seteazaInceputJoc={seteazaInceputJoc}
+            extrageCarte={extrageCarte}
+            mizaAnterioara={mizaAnterioara}
+            seteazaEsteImpartire={seteazaEsteImpartire}
+            cartiJucatorSplit={cartiJucatorSplit}
             // imparteCartileTest={imparteCartileTest}
-             seteazaCartiJucatorSplit={seteazaCartiJucatorSplit}
-             esteImpartire={esteImpartire}
+            seteazaCartiJucatorSplit={seteazaCartiJucatorSplit}
+            esteImpartire={esteImpartire}
             />
         </div>
       </div>
