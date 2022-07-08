@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
-import { useEffect, useState } from "react";
+
 
 const Butons = ({
 
@@ -122,6 +122,7 @@ const Butons = ({
       seteazaEsteBlackJack(false);
       seteazaNumarJetoane(numarJetoane - mizaAnterioara);
       seteazaEsteDublaj(false);
+
       imparteCartile();
     }
  }

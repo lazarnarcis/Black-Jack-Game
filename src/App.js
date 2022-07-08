@@ -161,7 +161,9 @@ const App = () => {
   const cartiD = scorMana(cartiDealer);
   const cartiJSp = scorMana(cartiJucatorSplit);
 
- // console.log("sumaCartiDealer", cartiD);
+  console.log("sumaCartiDealer", cartiD);
+ console.log("sumaCartiJucator", cartiJ);
+ console.log("sumaCartiSplit", cartiJSp);
 //use effectul initial va executa functia imparteCartile() in pasul initial
 
   useEffect(() => {
